@@ -1,27 +1,92 @@
-# D
+# 🌐 Parle Frontend - Aplicación Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12.
+Este proyecto es el frontend de **Parle**, desarrollado en **Angular** y diseñado para interactuar con el backend de Laravel. Puedes ejecutarlo fácilmente utilizando **Docker** o **npm**.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 📝 Requisitos Previos
 
-## Code scaffolding
+Asegúrate de tener instalados los siguientes programas según el método que elijas para ejecutar la aplicación:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Opción 1: Usando Docker
+- [Docker](https://www.docker.com/)
 
-## Build
+### Opción 2: Usando npm
+- [Node.js](https://nodejs.org/) (versión LTS recomendada; aunque el desarrollo se realizó en la versión 23).
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+---
 
-## Running unit tests
+## 🚀 Instrucciones para Ejecutar el Proyecto
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Opción 1: Ejecutar con Docker
 
-## Running end-to-end tests
+1. **Construir y Ejecutar el Contenedor**  
+   Dentro del directorio del proyecto, ejecuta:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+   ```bash
+   docker build -t parle-frontend .
+   docker run -d -p 80:80 parle-frontend
+   ```
 
-## Further help
+   Esto inicia un contenedor con **Nginx** que sirve la aplicación Angular. Por defecto, estará disponible en:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+   ```
+   http://localhost
+   ```
+
+2. **Configuración Adicional**  
+   Si necesitas cambiar el puerto, ajusta el parámetro `-p` en el comando de ejecución (por ejemplo, `-p 8080:80`).
+
+---
+
+### Opción 2: Ejecutar con npm
+
+1. **Instalar Dependencias**  
+   Asegúrate de estar en el directorio del proyecto y ejecuta:
+
+   ```bash
+   npm install
+   ```
+
+2. **Ejecutar el Servidor de Desarrollo**  
+   Inicia el servidor con:
+
+   ```bash
+   npm start
+   ```
+
+   Por defecto, estará disponible en:
+
+   ```
+   http://localhost:4200
+   ```
+---
+
+## 🛠 Detalles Técnicos
+
+### Dockerfile
+
+El `Dockerfile` utiliza **Nginx** para servir los archivos estáticos generados por Angular en un entorno de producción. A continuación, un resumen de su estructura:
+
+- Copia los archivos generados en `dist/` durante la etapa de construcción.
+- Configura un servidor web rápido y eficiente con Nginx.
+
+### Estructura del Proyecto
+
+```plaintext
+├── src/
+│   ├── app/               # Componentes principales
+│   ├── environments/      # Configuración de entornos
+├── angular.json           # Configuración de Angular CLI
+├── Dockerfile             # Configuración de Docker
+├── package.json           # Dependencias y scripts
+```
+
+---
+
+## 🔍 Observaciones
+
+- Este frontend fue desarrollado usando Angular y probado con Node.js versión 23 (aunque aún es inestable). Es recomendable usar una versión LTS para mayor estabilidad.
+- En caso de ejecutar con Docker, no es necesario tener Node.js instalado en tu máquina local.
+
+---
