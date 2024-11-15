@@ -1,0 +1,69 @@
+/* Estilos globales para la aplicación */
+
+/* Configuración del body */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Encabezados */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: #444;
+}
+
+/* Enlaces */
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Botones */
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Formularios */
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Contenedores principales */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Tarjetas */
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px 0;
+}
