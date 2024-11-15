@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+@import 'ngx-toastr/toastr';
+
+/* styles.component.scss */
+.register-login-container {
+  background: linear-gradient(to bottom, rgba(0, 123, 255, 1), rgba(255, 255, 255, 0.8));
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .card-container {
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+.card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
