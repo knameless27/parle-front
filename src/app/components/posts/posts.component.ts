@@ -5,6 +5,7 @@ import { Api } from '../../services/api';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-posts',
@@ -26,7 +27,7 @@ export class PostsComponent implements OnInit {
   createPostForm: FormGroup;
   closeResult = '';
 
-  constructor() {
+  constructor(private toastr: ToastrService) {
     this.createPostForm = this.fb.group({
       title: ['', Validators.required],
       content: ['', Validators.required],
@@ -65,9 +66,9 @@ export class PostsComponent implements OnInit {
     });
   }
 
-  onCategoryChange(categoryId: number) {
-    this.selectedCategory = categoryId;
-    this.fetchPosts(categoryId);
+  onCategoryChange({ id }: { id: number }) {
+    this.selectedCategory = id;
+    this.fetchPosts(id);
   }
 
   open(content: TemplateRef<any>) {
@@ -86,11 +87,13 @@ export class PostsComponent implements OnInit {
       const postData = this.createPostForm.value;
       this.apiService.createPost(postData).subscribe({
         next: () => {
+          this.toastr.success('Success!', 'Post registrado exitosamente.');
           this.fetchPosts(this.selectedCategory);
           this.createPostForm.reset();
           modal.close('Post created');
         },
         error: (error) => {
+          this.toastr.error('Error!', 'Post no registrado exitosamente.');
           this.errorMessage = 'Error al crear el post.';
           console.error(error);
         },
