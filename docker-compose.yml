@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: node:23-alpine
+    container_name: angular_frontend
+    working_dir: /usr/src/app
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "4200:4200"
+    environment:
+      - BACKEND_URL=http://localhost:8000
+    command: >
+      sh -c "npm install && echo \"export const environment = { production: false, backendUrl: '$BACKEND_URL' };\" > src/environments/environment.ts && npm run start"
+    networks:
+      - frontend_network
+
+networks:
+  frontend_network:
+    driver: bridge
