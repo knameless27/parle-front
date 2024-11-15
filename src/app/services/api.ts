@@ -26,4 +26,8 @@ export class Api {
   getPostsByCategory(categoryId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/posts/${categoryId}`);
   }
+
+  getCategories(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/categories`);
+  }
 }

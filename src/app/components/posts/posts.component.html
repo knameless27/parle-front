@@ -1,16 +1,94 @@
-<h2>Listado de Posts</h2>
+<div class="posts-container">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Parle</a>
 
-<div *ngIf="posts.length > 0; else noPosts">
-  <ul>
-    <li *ngFor="let post of posts">
-      <h3>{{ post.title }}</h3>
-      <p>{{ post.content }}</p>
-    </li>
-  </ul>
+      <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed"
+        [attr.aria-expanded]="!isNavbarCollapsed" aria-controls="navbarResponsive">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/register" routerLinkActive="active">Registro</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <div class="container my-4">
+    <h2 class="text-center mb-4">Listado de Posts</h2>
+
+    <div class="mb-3 d-flex">
+      <div class="flex-fill">
+        <label for="categorySelector" class="form-label">Categorías:</label>
+        <ng-select [items]="categories" bindLabel="name" bindValue="id" [(ngModel)]="selectedCategory"
+          placeholder="Selecciona una categoría" (change)="onCategoryChange($event)">
+        </ng-select>
+      </div>
+      <button class="ms-1 btn btn-primary align-self-end" (click)="open(createPostModal)">Crear Post</button>
+    </div>
+
+    <div *ngIf="posts.length > 0; else noPosts">
+      <ul class="list-group">
+        <li *ngFor="let post of posts" class="list-group-item">
+          <h3>{{ post.title }}</h3>
+          <p>{{ post.content }}</p>
+        </li>
+      </ul>
+    </div>
+
+    <ng-template #noPosts>
+      <p class="text-center text-muted">No hay posts disponibles en esta categoría.</p>
+    </ng-template>
+
+    <p *ngIf="errorMessage" class="text-danger text-center mt-3">{{ errorMessage }}</p>
+
+    <ng-template #createPostModal let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title">Crear Post</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="createPostForm" (ngSubmit)="onCreatePost(modal)">
+          <div class="mb-3">
+            <label for="title" class="form-label">Título</label>
+            <input id="title" type="text" formControlName="title" class="form-control" />
+            <div *ngIf="createPostForm.get('title')?.invalid && createPostForm.get('title')?.touched"
+              class="text-danger">
+              El título es obligatorio.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="content" class="form-label">Contenido</label>
+            <textarea id="content" formControlName="content" class="form-control" rows="4"></textarea>
+            <div *ngIf="createPostForm.get('content')?.invalid && createPostForm.get('content')?.touched"
+              class="text-danger">
+              El contenido es obligatorio.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="category" class="form-label">Categoría</label>
+            <ng-select [items]="categories" bindLabel="name" bindValue="id" formControlName="category_id"
+              placeholder="Selecciona una categoría">
+            </ng-select>
+            <div *ngIf="createPostForm.get('category_id')?.invalid && createPostForm.get('category_id')?.touched"
+              class="text-danger">
+              La categoría es obligatoria.
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100" [disabled]="createPostForm.invalid">Guardar</button>
+        </form>
+      </div>
+    </ng-template>
+  </div>
 </div>
-
-<ng-template #noPosts>
-  <p>No hay posts disponibles en esta categoría.</p>
-</ng-template>
-
-<p *ngIf="errorMessage" style="color: red">{{ errorMessage }}</p>

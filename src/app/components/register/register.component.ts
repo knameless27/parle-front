@@ -2,8 +2,9 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Api } from '../../services/api';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,7 @@ export class RegisterComponent {
   successMessage = '';
   errorMessage = '';
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService) {
     this.registerForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
@@ -32,11 +33,14 @@ export class RegisterComponent {
       this.apiService.register(this.registerForm.value).subscribe({
         next: (response: any) => {
           this.successMessage = 'Usuario registrado exitosamente.';
+          this.toastr.success('Success!', 'Usuario registrado exitosamente.');
           localStorage.setItem('auth_token', response.access_token);
+          this.router.navigate(['/posts']);
           this.errorMessage = '';
           this.registerForm.reset();
         },
         error: (error) => {
+          this.toastr.error('Error!', 'Error al registrar usuario. Intenta nuevamente.');
           this.errorMessage = 'Error al registrar usuario. Intenta nuevamente.';
           this.successMessage = '';
         },
